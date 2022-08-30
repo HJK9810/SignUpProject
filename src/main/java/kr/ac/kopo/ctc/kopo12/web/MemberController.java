@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.ac.kopo.ctc.kopo12.domain.Member;
@@ -21,6 +23,13 @@ public class MemberController {
 	
 	@Autowired
 	MemberRepository memberRepository;
+	
+	@PostMapping("/WRITE") // add member
+	public ResponseEntity<Member> addMember(@RequestBody Member member) {
+		memberRepository.save(member);
+		
+		return new ResponseEntity<Member>(member, HttpStatus.OK);
+	}
 	
 	@GetMapping("/READ") // find all members list
 	public ResponseEntity<List<Member>> getMemberList() {
