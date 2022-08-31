@@ -1,5 +1,7 @@
 package kr.ac.kopo.ctc.kopo12.web;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.ac.kopo.ctc.kopo12.domain.Member;
 import kr.ac.kopo.ctc.kopo12.repository.MemberRepository;
+import kr.ac.kopo.ctc.kopo12.service.MemberService;
+import kr.ac.kopo.ctc.kopo12.service.MemberServiceImpl;
 
 @Controller
 @RequestMapping("/signUp")
@@ -26,10 +30,14 @@ public class MemberController {
 
 	@Autowired
 	MemberRepository memberRepository;
+	@Autowired
+	MemberService memberService = new MemberServiceImpl();
 
 	@PostMapping("/WRITE") // add member
 	public ResponseEntity<Member> addMember(@RequestBody Member member) {
 		member.setPhone(member.getPhone().replaceAll("-", ""));
+		member.setSalt(memberService.getSalt());
+		member.setPasswd(memberService.getEncrypt(member.getPasswd(), member.getSalt()));
 		memberRepository.save(member);
 
 		return new ResponseEntity<Member>(member, HttpStatus.OK);
@@ -69,16 +77,23 @@ public class MemberController {
 	public ResponseEntity<Member> updateSeper(@PathVariable("id") String id,
 			@RequestParam(value = "passwd", required = false) String passwd,
 			@RequestParam(value = "Name", required = false) String name,
-			@RequestParam(value = "birthday", required = false) Date birthday,
+			@RequestParam(value = "birthday", required = false) String birthday,
 			@RequestParam(value = "phone", required = false) String phone,
 			@RequestParam(value = "address", required = false) String address) {
 
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		memberRepository.findById(id).ifPresent(item -> {
 			if (passwd != null) item.setPasswd(passwd);
 			if (name != null) item.setName(name);
-			if (birthday != null) item.setBirthday(birthday);
 			if (phone != null) item.setPhone(phone.replaceAll("-", ""));
 			if (address != null) item.setAddress(address);
+			
+			try {
+				Date date = format.parse(birthday);
+				if (birthday != null) item.setBirthday(date);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 
 			memberRepository.save(item);
 		});

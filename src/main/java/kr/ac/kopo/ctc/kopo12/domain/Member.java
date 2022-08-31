@@ -8,6 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import kr.ac.kopo.ctc.kopo12.service.MemberService;
+import kr.ac.kopo.ctc.kopo12.service.MemberServiceImpl;
+
 @Entity
 public class Member {
 
@@ -25,7 +30,8 @@ public class Member {
 	private String phone;
 	@Column
 	private String address;
-	
+	@Column
+	private String salt;
 	
 	public String getId() {
 		return id;
@@ -62,5 +68,11 @@ public class Member {
 	}
 	public void setAddress(String address) {
 		this.address = address;
+	}
+	public String getSalt() {
+		return salt;
+	}
+	public void setSalt(String salt) {
+		this.salt = salt;
 	}
 }

@@ -4,6 +4,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class MemberServiceImpl implements MemberService {
 
 	@Override
