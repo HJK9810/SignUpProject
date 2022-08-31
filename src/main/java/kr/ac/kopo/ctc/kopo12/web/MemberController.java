@@ -29,6 +29,7 @@ public class MemberController {
 
 	@PostMapping("/WRITE") // add member
 	public ResponseEntity<Member> addMember(@RequestBody Member member) {
+		member.setPhone(member.getPhone().replaceAll("-", ""));
 		memberRepository.save(member);
 
 		return new ResponseEntity<Member>(member, HttpStatus.OK);
@@ -76,7 +77,7 @@ public class MemberController {
 			if (passwd != null) item.setPasswd(passwd);
 			if (name != null) item.setName(name);
 			if (birthday != null) item.setBirthday(birthday);
-			if (phone != null) item.setPhone(phone);
+			if (phone != null) item.setPhone(phone.replaceAll("-", ""));
 			if (address != null) item.setAddress(address);
 
 			memberRepository.save(item);
