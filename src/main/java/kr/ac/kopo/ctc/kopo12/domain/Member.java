@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Member {
@@ -16,7 +18,8 @@ public class Member {
 	private String passwd;
 	@Column
 	private String Name;
-	@Column(name = "Date")
+	@Temporal(TemporalType.DATE)
+	@Column
 	private Date birthday;
 	@Column
 	private String phone;
