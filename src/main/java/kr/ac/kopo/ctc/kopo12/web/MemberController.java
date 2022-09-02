@@ -6,18 +6,10 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import kr.ac.kopo.ctc.kopo12.domain.Member;
 import kr.ac.kopo.ctc.kopo12.repository.MemberRepository;
@@ -83,6 +75,7 @@ public class MemberController {
 
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		memberRepository.findById(id).ifPresent(item -> {
+			// if (var != null ) input var into item
 			if (passwd != null) item.setPasswd(passwd);
 			if (name != null) item.setName(name);
 			if (phone != null) item.setPhone(phone.replaceAll("-", ""));

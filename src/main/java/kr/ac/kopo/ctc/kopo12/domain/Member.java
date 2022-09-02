@@ -8,30 +8,25 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import kr.ac.kopo.ctc.kopo12.service.MemberService;
-import kr.ac.kopo.ctc.kopo12.service.MemberServiceImpl;
-
 @Entity
 public class Member {
 
 	@Id
 	@Column
-	private String id;
+	private String id; // User ID
 	@Column
-	private String passwd;
+	private String passwd; // User Passwordd
 	@Column
-	private String Name;
+	private String Name; // User Name
 	@Temporal(TemporalType.DATE)
 	@Column
-	private Date birthday;
+	private Date birthday; // Birthday
 	@Column
 	private String phone;
 	@Column
 	private String address;
 	@Column
-	private String salt;
+	private String salt; // Salt for password Encryption
 	
 	public String getId() {
 		return id;
