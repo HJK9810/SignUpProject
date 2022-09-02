@@ -52,7 +52,7 @@ public class MemberController {
 	@PostMapping("/UPDATE/{id}") // update all field
 	public ResponseEntity<Member> updateAll(@PathVariable("id") String id, @RequestBody Member member) {
 		memberRepository.findById(id).ifPresent(item -> {
-			item.setPasswd(member.getPasswd());
+			item.setPasswd(memberService.getEncrypt(member.getPasswd(), item.getSalt()));
 			item.setName(member.getName());
 			item.setBirthday(member.getBirthday());
 			item.setPhone(member.getPhone());
@@ -76,7 +76,7 @@ public class MemberController {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		memberRepository.findById(id).ifPresent(item -> {
 			// if (var != null ) input var into item
-			if (passwd != null) item.setPasswd(passwd);
+			if (passwd != null) item.setPasswd(memberService.getEncrypt(passwd, item.getSalt()));
 			if (name != null) item.setName(name);
 			if (phone != null) item.setPhone(phone.replaceAll("-", ""));
 			if (address != null) item.setAddress(address);
