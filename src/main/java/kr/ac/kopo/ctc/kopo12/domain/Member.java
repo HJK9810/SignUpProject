@@ -8,22 +8,30 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 public class Member {
 
 	@Id
 	@Column
+	@ApiModelProperty(example = "User Id")
 	private String id; // User ID
 	@Column
-	private String passwd; // User Passwordd
+	@ApiModelProperty(example = "Password")
+	private String passwd; // User Password
 	@Column
+	@ApiModelProperty(example = "User Name")
 	private String Name; // User Name
 	@Temporal(TemporalType.DATE)
 	@Column
+	@ApiModelProperty(example = "Birthday yyyy-MM-dd")
 	private Date birthday; // Birthday
 	@Column
+	@ApiModelProperty(example = "phone Number")
 	private String phone;
 	@Column
+	@ApiModelProperty(example = "Address")
 	private String address;
 	@Column
 	private String salt; // Salt for password Encryption
